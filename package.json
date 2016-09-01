@@ -1,0 +1,37 @@
+{
+  "name": "fixed-set",
+  "version": "0.0.1",
+  "description": "fixed size set for JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "test-cover": "istanbul cover _mocha -- -u exports"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magicdawn/fixed-set-js.git"
+  },
+  "keywords": [
+    "fixed",
+    "set",
+    "fixed-size",
+    "fixed-size-set"
+  ],
+  "author": "magicdawn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/magicdawn/fixed-set-js/issues"
+  },
+  "homepage": "https://github.com/magicdawn/fixed-set-js#readme",
+  "dependencies": {
+    "co": "^4.6.0"
+  },
+  "devDependencies": {
+    "co-mocha": "^1.1.2",
+    "coveralls": "^2.11.9",
+    "eslint": "^3.0.1",
+    "istanbul": "^0.4.4",
+    "mocha": "^2.5.3",
+    "should": "^9.0.2"
+  }
+}
