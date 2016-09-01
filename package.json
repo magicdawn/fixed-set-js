@@ -24,7 +24,8 @@
   },
   "homepage": "https://github.com/magicdawn/fixed-set-js#readme",
   "dependencies": {
-    "co": "^4.6.0"
+    "co": "^4.6.0",
+    "debug": "^2.2.0"
   },
   "devDependencies": {
     "co-mocha": "^1.1.2",

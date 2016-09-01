@@ -6,6 +6,7 @@
 
 const assert = require('assert');
 const EventEmitter = require('events');
+const debug = require('debug')('fixed-set:index');
 
 /**
  * FixedSet
@@ -16,11 +17,10 @@ const FixedSet = module.exports = class FixedSet extends Set {
     assert(max, 'the max can not be empty');
     super();
     this.max = max;
-    this._emitter = new EventEmitter();
     this._waitQueue = [];
   }
 
-  add(...args) {
+  add(item) {
     // check
     if (this.size >= this.max) {
       const msg = 'FixedSet size ' + this.max + ' exceed';
@@ -28,12 +28,12 @@ const FixedSet = module.exports = class FixedSet extends Set {
       throw new Error(msg);
     }
 
-    super.add(...args);
+    super.add(item);
     this._onSizeChange();
   }
 
-  delete(...args) {
-    super.delete(...args);
+  delete(item) {
+    super.delete(item);
     this._onSizeChange();
   }
 
@@ -43,30 +43,31 @@ const FixedSet = module.exports = class FixedSet extends Set {
   }
 
   _onSizeChange() {
+    debug('size change: size = %s', this.size);
     while (this.size < this.max) {
-      const resolve = this._waitQueue.shift();
-      resolve();
+      const obj = this._waitQueue.shift();
+      if (!obj) return;
+
+      const item = obj.item;
+      const resolve = obj.resolve;
+      super.add(item);
+      resolve(item); // 通知已添加
     }
   }
-};
 
-/**
- * 等待空余
- */
+  /**
+   * 等待空余
+   */
+  queue(item) {
+    return new Promise((resolve) => {
+      // queue
+      this._waitQueue.push({
+        item,
+        resolve,
+      });
 
-FixedSet.prototype.wait = (timeout) => new Promise((resolve, reject) => {
-  let timer;
-  if (timeout) {
-    timer = setTimeout(function() {
-      const err = new Error(`timeout of ${ timeout }ms exceed`);
-      err.isTimeout = true;
-      err.timeout = timeout;
-      reject(err);
-    }, timeout);
+      // trigger
+      this._onSizeChange();
+    });
   }
-
-  this._waitQueue.push(() => {
-    clearTimeout(timer);
-    resolve();
-  });
-});
+};
