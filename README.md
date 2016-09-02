@@ -14,7 +14,17 @@ $ npm i fixed-set --save
 
 ## API
 ```js
-const fixedSet = require('fixed-set');
+const FixedSet = require('fixed-set');
+```
+
+### queue
+
+```js
+const s = new FixedSet(2);
+s.add(1).add(2);
+s.queue(3).then(i => {
+  // blabla
+});
 ```
 
 ## Changelog
