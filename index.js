@@ -21,6 +21,8 @@ const FixedSet = module.exports = class FixedSet extends Set {
   }
 
   add(item) {
+    if(super.has(item)) return this;
+
     // check
     if (this.size >= this.max) {
       const msg = 'FixedSet size ' + this.max + ' exceed';
@@ -29,17 +31,17 @@ const FixedSet = module.exports = class FixedSet extends Set {
     }
 
     super.add(item);
-    this._onSizeChange();
+    return this;
   }
 
-  delete(item) {
-    super.delete(item);
-    this._onSizeChange();
+  delete() {
+    super.delete.apply(this, arguments);
+    return this._onSizeChange();
   }
 
   clear() {
     super.clear();
-    this._onSizeChange();
+    return this._onSizeChange();
   }
 
   _onSizeChange() {
@@ -50,9 +52,10 @@ const FixedSet = module.exports = class FixedSet extends Set {
 
       const item = obj.item;
       const resolve = obj.resolve;
-      super.add(item);
+      this.add(item);
       resolve(item); // 通知已添加
     }
+    return this;
   }
 
   /**
