@@ -15,6 +15,8 @@ $ npm i fixed-set --save
 ## API
 ```js
 const FixedSet = require('fixed-set');
+const max = 10; // the capcity
+const s = new FixedSet(max);
 ```
 
 ### queue
