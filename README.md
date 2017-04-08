@@ -1,4 +1,6 @@
 # fixed-set
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/magicdawn/fixed-set-js.svg)](https://greenkeeper.io/)
 > fixed size set for JavaScript
 
 [![Build Status](https://img.shields.io/travis/magicdawn/fixed-set-js.svg?style=flat-square)](https://travis-ci.org/magicdawn/fixed-set-js)
